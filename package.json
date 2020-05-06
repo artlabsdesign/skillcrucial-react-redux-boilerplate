@@ -21,7 +21,7 @@
     "next:build": "next",
     "watch:server": "nodemon --legacy-watch start.js --ignore \"*.hot-update.json\" --ignore \"js/bundle.js\" --ignore \"css/main.css\" --watch server --watch client ",
     "build:prod": "cross-env NODE_ENV=production webpack --config webpack.production.config.js --progress --profile --colors",
-    "heroku-postbuild": "yarn run build:prod",
+    "heroku-postbuild": "npm run build:prod",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
