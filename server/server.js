@@ -20,9 +20,9 @@ const writeUserFile = async (text) => {
   await writeFile(`${__dirname}/users.json`, text, { encoding: "utf8" })  
 }
 
-const readUserFile = async () => {
+/* const readUserFile = async () => {
    await readFile(`${__dirname}/users.json`, { encoding: "utf8" })
-}
+} */
 
 server.use(cors())
 
@@ -58,7 +58,7 @@ server.post('/api/v1/users', async (req, res) => {
   const users = await readFile(`${__dirname}/users.json`, { encoding: "utf8" })  
   const usersObj = JSON.parse(users)
   const newId = usersObj.length + 1
-  console.log(newId)
+  // console.log(newId)
   usersObj.push({'id': newId})
   await writeUserFile(JSON.stringify(usersObj))
   res.json({'status': 'success', 'id': newId})
@@ -68,9 +68,9 @@ server.post('/api/v1/users', async (req, res) => {
 server.patch('/api/v1/users/:userId', async (req, res) => {
   const users = await readFile(`${__dirname}/users.json`, { encoding: "utf8" })
   const usersObj = JSON.parse(users)
-  for (let i = 0; i < usersObj.length; i++){
+  for (let i = 0; i < usersObj.length; i += 1){
     if (usersObj[i].id === +req.params.userId){
-      console.log(usersObj[i].id)
+      // console.log(usersObj[i].id)
       usersObj[i] = {...usersObj[i], 'customfield': 'customvalue'}
     }
   }
@@ -82,9 +82,9 @@ server.patch('/api/v1/users/:userId', async (req, res) => {
 server.delete('/api/v1/users/:userId', async (req, res) => {
   const users = await readFile(`${__dirname}/users.json`, { encoding: "utf8" })
   const usersObj = JSON.parse(users)
-  for (let i = 0; i < usersObj.length; i++){
+  for (let i = 0; i < usersObj.length; i += 1){
     if (usersObj[i].id === +req.params.userId){
-      console.log(usersObj[i].id)
+      // console.log(usersObj[i].id)
       usersObj.splice(i, 1)
     }
   }
