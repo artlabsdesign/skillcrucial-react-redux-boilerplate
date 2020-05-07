@@ -96,8 +96,7 @@ server.delete('/api/v1/users/:userId', async (req, res) => {
 })
 
 server.delete('/api/v1/users/', async (req, res) => {
-  await unlink(`${__dirname}/users.json`) 
-  res.end()
+  await unlink(`${__dirname}/users.json`).catch(() => res.end('Файла уже нет, удалять нечего')).then(() => res.end('Файл удален!'))
 })
 
 server.use('/api/', (req, res) => {
