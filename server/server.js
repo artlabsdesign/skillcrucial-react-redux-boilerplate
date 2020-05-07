@@ -56,13 +56,10 @@ server.get('/api/v1/users', async (req, res) => {
 
 server.post('/api/v1/users', async (req, res) => {
   const users = await readFile(`${__dirname}/users.json`, { encoding: "utf8" })  
-  const usersObj = JSON.parse(users)
-  // console.log(req.body)
-  const newId = usersObj.length + 1
-  // console.log(newId)
+  let usersObj = JSON.parse(users)
+  const newId = usersObj[usersObj.length - 1].id + 1
   const newEl = {...req.body, 'id': newId}
-  console.log(newEl)
-  usersObj.push(newEl)
+  usersObj = [ ...usersObj,  newEl]
   await writeUserFile(JSON.stringify(usersObj))
   res.json({'status': 'success', 'id': newId})
   
