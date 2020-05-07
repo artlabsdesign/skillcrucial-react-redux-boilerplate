@@ -57,9 +57,12 @@ server.get('/api/v1/users', async (req, res) => {
 server.post('/api/v1/users', async (req, res) => {
   const users = await readFile(`${__dirname}/users.json`, { encoding: "utf8" })  
   const usersObj = JSON.parse(users)
+  // console.log(req.body)
   const newId = usersObj.length + 1
   // console.log(newId)
-  usersObj.push({'id': newId})
+  const newEl = {...req.body, 'id': newId}
+  console.log(newEl)
+  usersObj.push(newEl)
   await writeUserFile(JSON.stringify(usersObj))
   res.json({'status': 'success', 'id': newId})
   
@@ -71,7 +74,7 @@ server.patch('/api/v1/users/:userId', async (req, res) => {
   for (let i = 0; i < usersObj.length; i += 1){
     if (usersObj[i].id === +req.params.userId){
       // console.log(usersObj[i].id)
-      usersObj[i] = {...usersObj[i], 'customfield': 'customvalue'}
+      usersObj[i] = Object.assign(usersObj[i], req.body)
     }
   }
   await writeUserFile(JSON.stringify(usersObj))
